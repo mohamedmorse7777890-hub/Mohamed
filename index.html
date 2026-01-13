@@ -1,0 +1,142 @@
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>by.mohamed morsy</title>
+
+  <style>
+    /* ========= قاعدة عامة ========= */
+    :root{
+      --whatsapp: #25D366;
+      --whatsapp-hover: #1ea955;
+      --radius: 12px;
+      font-family: "Arial", "Helvetica", sans-serif;
+    }
+
+    /* ===== صفحة كاملة مع خلفية ===== */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      /* غيّر اسم الصورة هنا لو لازم */
+      background-image: url("b980af8e9a1c77c09a54ec6373b5b36c.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      align-items: center;    /* لتوسيط عمودي */
+      justify-content: center;/* لتوسيط أفقي */
+      text-align: center;
+      color: #ffffff;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* طبقة داكنة فوق الصورة لقراءة النصوص */
+    .overlay{
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 0;
+    }
+
+    .card{
+      position: relative;
+      z-index: 1; /* فوق الـ overlay */
+      max-width: 920px;
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      backdrop-filter: blur(6px);
+    }
+
+    header h1{
+      margin: 0 0 8px 0;
+      font-size: 28px;
+      letter-spacing: 0.4px;
+    }
+
+    nav a{
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 600;
+    }
+
+    .hero h2{
+      margin: 18px 0 6px;
+      font-size: 22px;
+    }
+
+    .hero p{
+      margin: 0 0 18px;
+      opacity: 0.9;
+    }
+
+    /* زر واتساب */
+    .whatsapp-btn {
+      display: inline-block;
+      margin-top: 3px;
+      padding: 12px 22px;
+      border: none;
+      background-color: var(--whatsapp);
+      color: #000;
+      font-size: 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: transform .12s ease, background-color .12s ease;
+      text-decoration: none;
+    }
+
+    .whatsapp-btn:hover {
+      background-color: var(--whatsapp-hover);
+      transform: translateY(-3px);
+    }
+
+    /* Responsive */
+    @media (max-width:640px){
+      .card{ padding: 18px; }
+      header h1{ font-size: 20px; }
+      .hero h2{ font-size: 18px; }
+      .whatsapp-btn{ font-size: 16px; padding: 10px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- طبقة التعتيم فوق الخلفية -->
+  <div class="overlay" aria-hidden="true"></div>
+
+  <main class="card" role="main">
+    <header>
+      <h1>𖣘𖤍ẹĿᶁ₳ị₷Ħẹи̃̾₭₳и̃̾𖤍𖣘</h1>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <h2 id="hero-title">by.mohamed morsy</h2>
+      <p>
+   <btton><a href="مسار البرنامج.exe" download>
+  <button>تحميل البرنامج</button>
+</a></button></p>
+
+      <!-- زر واتساب يفتح المحادثة في تاب جديدة، مع رسالة مبدئية مشفرة -->
+      <a
+        class="whatsapp-btn"
+        id="whatsappBtn"
+        href="#"
+        role="button"
+        aria-label="افتح محادثة واتساب"
+      >
+       
+<button class="whatsapp-btn" onclick="openChat()">whatsapp</button>
+
+    <script>
+        function openChat() {
+            window.location.href = "https://wa.me/201288195003";
+        }
+    </script>
+</body>
+</html>
