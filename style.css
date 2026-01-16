@@ -1,27 +1,4 @@
-background-image: url("b980af8e9a1c77c09a54ec6373b5b36c.png")
-.services {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 25px;
-}
-
-.service-btn {
-  padding: 14px 26px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.25);
-  cursor: default;
-  backdrop-filter: blur(4px);
-  transition: all 0.25s ease;
-}
-
-.service-btn:hover {
-  transform: translateY(-4px) scale(1.03);
-  background: rgba(255,255,255,0.18);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+ 
+ button {
+  background-color: #ff0000;
 }
