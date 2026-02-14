@@ -1,158 +1,279 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>by.mohamed morsy</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohamed Services</title>
   <style>
-    :root{
-      --whatsapp: #1ea955;
-      --whatsapp-hover: #1ea955;
-      --radius: 12px;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    html, body {
-      height: 100%;
-      margin: 0;
+    :root {
+      --primary-color: #00ff00;
+      --secondary-color: #00ff00;
+      --background-color: #000;
+      --card-background: #000;
+      --text-color: white;
+      --border-radius: 10px;
     }
 
     body {
-      background-size: cover;
-      background-position: center;
+      font-family: Montserrat, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: 0.5s ease-in-out;
+    }
+
+    .header {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start; /* خلي اللوجو على الشمال */
       align-items: center;
-      color: #00ff;
-     background-color:#000;
-    }
-
-    .overlay{
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-    }
-
-    .card{
-      position: relative;
-      z-index: 1;
-      max-width: 250px;
-      width: 100%;
       padding: 20px;
-      background: rgba(255,5,255,0.06);
-      border-radius: 16px;
-      text-align: center;
-      backdrop-filter: blur(0px);
+      background-color: var(--background-color);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px;
     }
 
-    h4{ margin-bottom: 20px; }
-    p3{ margin-bottom: 40px; 
-      font-size:18px;
-      color:;
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary-color);
     }
-   
 
-    .btn{
-      display: inline-block;
-      padding: 5px 15px;
-      border-radius: var(--radius);
-      text-decoration:none;
-      font-size: 18px;
-      cursor: pointer;
+    .nav-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-menu a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover {
+      color: var(--primary-color);
+    }
+
+    .section-divider {
+      height: 2px;
+      background-color: var(--primary-color);
       border: none;
+      margin: 40px auto;
+      width: 80%;
+      box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color);
     }
 
-    .download-btn{
-      background: #219;
-      color:white;
-      margin-bottom: 30px
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .whatsapp-btn{
-      background: var(--whatsapp);
-      color: black;
-      margin-bottom:30px;
+    .hero-text {
+      position: relative;
+      z-index: 2;
     }
 
-    .whatsapp-btn:hover{
-      background: var(--whatsapp-hover);
+    .hero-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(to top, rgba(26, 26, 46, 0.8), rgba(26, 26, 46, 0)),
+        url("-5897876158207346656_109.app_icon.png");
+      background-size: cover;
+      background-position: center center;
+      z-index: 1;
     }
-    button:hover {
-  background-color:#679;
-}
-   button{background-color:#455a64;
-    color: black;
-    font-size:13px;
-   }
-    
-    
+
+    .hero-text h1 {
+      font-size: 36px;
+      color: var(--secondary-color);
+      margin: 0;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      max-width: 600px;
+      margin-top: 10px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    /* زرار التلي والواتس يكون كلامه اسود والعكس */
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: var(--primary-color);
+      color: #000; /* كلام أسود */
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #00cc00;
+    }
+
+    .services-section {
+      padding: 50px 20px;
+    }
+
+    .services-section h2 {
+      text-align: center;
+      font-size: 32px;
+      color: var(--secondary-color);
+      margin-bottom: 30px;
+    }
+
+    .services-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .service-card {
+      background-color: var(--card-background);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      border: 2px solid var(--secondary-color);
+      box-shadow: 0 0 15px var(--secondary-color);
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .service-card:active {
+      transform: scale(1.05);
+    }
+
+    .service-card h3 {
+      color: var(--secondary-color);
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    #about {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    #about h2 {
+      font-size: 32px;
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+    }
+
+    #about p {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--background-color);
+      border-top: 1px solid var(--card-background);
+    }
+
+    @media (min-width: 768px) {
+      .services-container {
+        flex-flow: wrap;
+        justify-content: center;
+      }
+      .service-card {
+        flex: 1 1 30%;
+        max-width: 300px;
+      }
+      .hero-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+      
+    }
   </style>
 </head>
 
 <body>
-  <div class="overlay"></div>
+  <header class="header">
+    <div class="logo">Mohamed Services</div>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <main class="card">
-    <header>
-      <p3>𖣘𖤍ẹĿᶁ₳ị₷Ħẹи̃̾₭₳и̃̾𖤍𖣘</p3>
-    </header>
-
-    <section>
-      
-      <br></br>
-      
-      
-     
-      <!-- زر تحميل البرنامج -->
-      <a href="" download class="btn download-btn">
-    download apk 1
-      </a>
-      <a href="" download class="btn download-btn">
-       download apk 2
-      </a>
-      <a href="" download class="btn download-btn">
-        download apk 3
-      </a>
-      <a href="" download class="btn download-btn">
-        download apk 4
-      </a>
-      <a href="" download class="btn download-btn">
-        download apk 5
-      </a>
-      </a>
-      <a href="" download class="btn download-btn">
-        download apk 6
-      </a>
-      </a>
-      <a href="" download class="btn download-btn">
-        download apk 7
-      </a>
-      </a>
-      <a href="" download class="btn download-btn">
-        download apk 8
-      </a>
-      
-      <br><br>
-
-      <!-- زر واتساب -->
-      <button class="btn whatsapp-btn" onclick="openChat()">
-        WhatsApp
-      </button>
+  <main class="main-content">
+    <section class="hero-section">
+      <div class="hero-image-overlay"></div>
+      <div class="hero-text">
+        <h1>Hello, I'm Mohamed</h1>
+        <p>“I develop mobile apps, websites, and games, and I provide cybersecurity services.”</p>
+        <div class="hero-buttons">
+          <a href="https://t.me/hwhwjc" class="btn" target="_blank">Telegram</a>
+          <a href="https://whatsapp.com/channel/0029VbC17r76WaKspQmMEC1s" class="btn" target="_blank">WhatsApp Channel</a>
+          <!-- زرار APK -->
+          <a href="https://mohamedmorse7777890-hub.github.io/Bot-me/" class="btn" target="_blank">dashboard</a>
+        </div>
+      </div>
     </section>
-     <button onmouseover="alert('by.mohamed morsy💻💹')">creted by</button>
-    <head>
-  <link rel="stylesheet" href="styles.css">
-  </link>
-</head>
 
+    <hr class="section-divider">
 
+    <section id="services" class="services-section">
+      <h2>Services</h2>
+      <div class="services-container">
+        <div class="service-card">
+          <h3>App Development</h3>
+          <p>Development of various applications (Mobile Apps & Software).</p>
+        </div>
+        <div class="service-card">
+          <h3>Web Development</h3>
+          <p>Web Development.</p>
+        </div>
+        <div class="service-card">
+          <h3>Game Development</h3>
+          <p>Game Development.</p>
+        </div>
+        <div class="service-card">
+          <h3>Cybersecurity</h3>
+          <p>Programming hacking tools and cybersecurity.</p>
+        </div>
+        <div class="service-card">
+          <h3>Languages</h3>
+          <p>HTML > C++ > JAVA > Python</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="about">
+      <h2>Created by</h2>
+      <p>by. Mohamed Morsy</p>
+    </section>
   </main>
-  <script>
-    function openChat() {
-      window.open("https://wa.me/201288195003", "_blank");
-    }
-  </script>
- 
+
+  <footer class="footer">
+    <p>© 2026 All rights reserved to Mohamed Morsy.</p>
+  </footer>
 </body>
 </html>
